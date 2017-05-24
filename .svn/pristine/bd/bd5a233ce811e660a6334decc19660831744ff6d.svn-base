@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>priv.zhouhuayi.restaurant</groupId>
+		<artifactId>restaurant</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>restaurant-service</artifactId>
+	<packaging>war</packaging>
+
+	<dependencies>
+		<!-- 引入实体entity类 -->
+		<dependency>
+			<groupId>priv.zhouhuayi.restaurant</groupId>
+			<artifactId>restaurant-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>priv.zhouhuayi.restaurant</groupId>
+			<artifactId>restaurant-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- 引用spring aop扫描包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- 引用spring 事务扫描包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- 引用切面jar包 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		
+		<dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-web</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>
+        
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-webmvc</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>
+        
+        <dependency>  
+            <groupId>commons-io</groupId>  
+            <artifactId>commons-io</artifactId>  
+            <version>${commons-io.version}</version>  
+        </dependency> 
+        
+        <dependency>  
+            <groupId>commons-codec</groupId>  
+            <artifactId>commons-codec</artifactId>  
+            <version>${commons-codec.version}</version>  
+        </dependency>  
+  
+        <dependency>  
+            <groupId>commons-logging</groupId>  
+            <artifactId>commons-logging</artifactId>  
+            <version>${commons-logging.version}</version>  
+        </dependency>  
+		
+		<!-- protostuff序列化依赖 -->  
+        <dependency>  
+            <groupId>com.dyuproject.protostuff</groupId>  
+            <artifactId>protostuff-core</artifactId>  
+            <version>1.0.8</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>com.dyuproject.protostuff</groupId>  
+            <artifactId>protostuff-runtime</artifactId>  
+            <version>1.0.8</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>commons-collections</groupId>  
+            <artifactId>commons-collections</artifactId>  
+            <version>3.2</version>  
+        </dependency>  
+          
+         <dependency>  
+	      <groupId>com.github.sgroschupf</groupId>  
+	      <artifactId>zkclient</artifactId>  
+	      <version>0.1</version>  
+	    </dependency>
+		
+		<!-- <dependency>  
+            <groupId>javax.servlet</groupId>  
+            <artifactId>javax.servlet-api</artifactId>  
+            <version>${javax.servlet-api.version}</version>  
+        </dependency>  
+          
+        <dependency>    
+            <groupId>com.fasterxml.jackson.core</groupId>    
+            <artifactId>jackson-core</artifactId>    
+            <version>2.1.0</version>    
+        </dependency>    
+        <dependency>    
+            <groupId>com.fasterxml.jackson.core</groupId>    
+            <artifactId>jackson-databind</artifactId>    
+            <version>2.1.0</version>    
+        </dependency>    
+        <dependency>    
+            <groupId>com.fasterxml.jackson.core</groupId>    
+            <artifactId>jackson-annotations</artifactId>    
+            <version>2.1.0</version>    
+        </dependency> -->
+		
+		<!-- 2、Redis与spring的集合包 -->
+		<!-- <dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.4.2.RELEASE</version>
+		</dependency> -->
+		<!-- 引用Spring session包 -->
+		<!-- <dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session</artifactId>
+			<version>1.0.2.RELEASE</version>
+		</dependency> -->
+	</dependencies>
+</project>

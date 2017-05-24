@@ -1,0 +1,43 @@
+package priv.zhouhuayi.restaurant.controller.test;
+
+import java.util.Enumeration;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import priv.zhouhuayi.restaurant.api.menu.MenuService;
+
+import com.alibaba.dubbo.common.logger.Logger;
+import com.alibaba.dubbo.common.logger.LoggerFactory;
+
+@Controller
+@RequestMapping("test")
+public class TestOssCBController {
+	
+	Logger log = LoggerFactory.getLogger(TestOssCBController.class);
+	
+	@Resource
+	private MenuService menuService;
+	
+	@RequestMapping("out")
+	@ResponseBody
+	public String test() {
+		System.out.println(menuService.test());
+		return "aa";
+	}
+	
+	@RequestMapping("testOssBack")
+	public void testOssBack(HttpServletRequest request) {
+		Enumeration<String> paramName = request.getParameterNames();
+		while(paramName.hasMoreElements()) {
+			String name = paramName.nextElement();
+			String value = request.getParameter(name);
+			log.info("参数名："+name);
+			log.info("参数值："+value);
+		}
+	}
+}

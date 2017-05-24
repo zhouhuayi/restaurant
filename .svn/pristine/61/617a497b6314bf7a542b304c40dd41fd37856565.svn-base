@@ -1,0 +1,11 @@
+package priv.zhouhuayi.restaurant.service.menu;
+
+import priv.zhouhuayi.restaurant.api.menu.MenuService;
+
+
+public class MenuServiceImpl implements MenuService{
+	@Override
+	public String test() {
+		return "aaaaaa";
+	}
+}

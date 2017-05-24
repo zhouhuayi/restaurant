@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="priv.zhouhuayi.restaurant.service.*.*" />
+	<context:component-scan base-package="priv.zhouhuayi.restaurant.mapper.*.*" />
+	<context:component-scan base-package="priv.zhouhuayi.restaurant.dao.*.*" />
+	
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="restaurant-service"/>
+    <!-- 使用multicast广播注册中心暴露服务地址 -->
+    <!-- <dubbo:registry address="zookeeper://127.0.0.1:2181" /> -->
+    <dubbo:registry address="multicast://224.1.3.1:1314" />
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20880" />
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="priv.zhouhuayi.restaurant.api.menu.MenuService" ref="menuService" />
+    
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="menuService" class="priv.zhouhuayi.restaurant.service.menu.MenuServiceImpl" />
+    
+	<!-- 引入属性文件 -->
+	<import resource="Mybatis.xml" />
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 注解方式配置事物 -->
+	<tx:annotation-driven transaction-manager="transactionManager" /> 
+
+	<!-- 拦截器方式配置事物 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="batchAdd*" propagation="REQUIRED" />
+			<tx:method name="append*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="doUpdate*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="cancel*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="repair" propagation="REQUIRED" />
+			<tx:method name="delAndRepair" propagation="REQUIRED" />
+			<tx:method name="before*" propagation="REQUIRED" />
+			<tx:method name="after" propagation="REQUIRED" />
+			<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="load*" propagation="SUPPORTS" />
+			<tx:method name="search*" propagation="SUPPORTS" />
+			<tx:method name="datagrid*" propagation="SUPPORTS" />
+			<tx:method name="*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- 定义一个切入点 -->
+		<aop:pointcut id="serviceMethod"
+			expression="execution(* priv.zhouhuayi.restaurant.service.**.*(..))  || execution(* priv.zhouhuayi.restaurant.task.*.*(..)) " />
+		<!-- 对切入点和事务的通知，进行适配 -->
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="serviceMethod" />
+	</aop:config>
+	
+	<context:annotation-config/>
+	
+	<!-- 配置spring-session -->   
+    <!-- <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">   
+        过期时间100分钟  
+        <property name="maxInactiveIntervalInSeconds" value="6000"></property>  
+    </bean>    
+    redis连接池  
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig" />   
+    
+    spring集成redis
+    <bean  id="jedisConnectionFactory"  class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  >    
+        <property  name="hostName"  value="192.168.1.36" />
+        <property  name="hostName"  value="192.168.0.45" />
+        <property  name="port"  value="6379" />
+        <property name="password" value="yhzb"/>
+        <property  name="poolConfig"  ref="jedisPoolConfig" />
+    </bean>  -->
+</beans>

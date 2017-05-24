@@ -1,0 +1,5 @@
+package priv.zhouhuayi.restaurant.api.menu;
+
+public interface MenuService {
+	public String test();
+}

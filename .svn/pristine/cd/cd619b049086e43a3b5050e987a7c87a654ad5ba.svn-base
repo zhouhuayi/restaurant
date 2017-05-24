@@ -1,0 +1,82 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+
+import priv.zhouhuayi.restaurant.util.aliyun.http.HttpUtils;
+
+public class ReadTxt {
+	public static void main(String[] args) {
+		String host = "http://text.aliapi.hanvon.com";
+		String path = "/rt/ws/v1/ocr/text/recg";
+		String method = "POST";
+		String appcode = "21bd9da37ade43ccb396c0425678fb80";
+		Map<String, String> headers = new HashMap<String, String>();
+		// 最后在header中的格式(中间是英文空格)为Authorization:APPCODE
+		// 83359fd73fe94948385f570e3c139105
+		headers.put("Authorization", "APPCODE " + appcode);
+		// 根据API的要求，定义相对应的Content-Type
+		headers.put("Content-Type", "application/json; charset=UTF-8");
+		headers.put("Content-Type", "application/octet-stream");
+		Map<String, String> querys = new HashMap<String, String>();
+		querys.put("code", "74e51a88-41ec-413e-b162-bd031fe0407e");
+		String str = GetImageStr("e://2017.jpg");
+//		System.out.println(str);
+		JSONObject json = new JSONObject();
+		json.put("uid", "118.12.0.12");
+		json.put("lang", "chns");
+		json.put("color", "color");
+		json.put("image", str);
+//	    String bodys = "{\"uid\": \"118.12.0.12\",\"lang\": \"chns\",\"color\": \"gray\",\"image\": \""+str+"\"}";
+		System.out.println(json.toString());
+	    try {
+			/**
+			 * 重要提示如下: HttpUtils请从
+			 * https://github.com/aliyun/api-gateway-demo-sign
+			 * -java/blob/master/src
+			 * /main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java 下载
+			 *
+			 * 相应的依赖请参照
+			 * https://github.com/aliyun/api-gateway-demo-sign-java/blob
+			 * /master/pom.xml
+			 */
+			HttpResponse response = HttpUtils.doPost(host, path, method,
+					headers, querys, json.toString());
+			System.out.println(response.toString());
+			// 获取response的body
+			 System.out.println(EntityUtils.toString(response.getEntity()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	 // 图片转化成base64字符串  
+    public static String GetImageStr(String imgFile) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理  
+        InputStream in = null;  
+        byte[] data = null;  
+        // 读取图片字节数组  
+        try {  
+            if(imgFile==null||"".equals(imgFile)){  
+                imgFile="uploaddir/file/default.png";  
+            }  
+            in = new FileInputStream(imgFile);  
+            data = new byte[in.available()];  
+            in.read(data);  
+            in.close();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
+        // 对字节数组Base64编码  
+//        BASE64Encoder encoder = new BASE64Encoder();
+        String str = new String(Base64.encodeBase64String(data));
+		return str;
+//        return encoder.encode(data);// 返回Base64编码过的字节数组字符串  
+    }  
+}

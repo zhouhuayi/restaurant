@@ -1,0 +1,95 @@
+package priv.zhouhuayi.restaurant.controller.util;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class ContextUtils {
+    private ContextUtils() {
+    }
+
+    private static ContextUtils contextUtils = null;
+
+    private static ClassPathXmlApplicationContext context = null;
+
+    private static ClassPathXmlApplicationContext dataFilterContext = null;
+    private static ClassPathXmlApplicationContext afterLoanContext = null;
+    private static ClassPathXmlApplicationContext creditAdviceContext = null;
+    private static ClassPathXmlApplicationContext goodsOrderContext = null;
+
+    public static ContextUtils getInstance() {
+        if (null == contextUtils) {
+            contextUtils = new ContextUtils();
+        }
+        return contextUtils;
+    }
+
+    public ClassPathXmlApplicationContext getUserCenterContext() {
+        if (null == context) {
+            context = new ClassPathXmlApplicationContext("Dubbo-Service.xml");
+        }
+        return context;
+    }
+
+    /**
+     * 功能描述: 取得大数据筛选相关的service配置信息<br>
+     * 〈功能详细描述〉
+     *
+     * @return
+     * @throws Exception
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public ClassPathXmlApplicationContext getDataFilterContext() throws Exception {
+        if (null == dataFilterContext) {
+            dataFilterContext = new ClassPathXmlApplicationContext("datafilterContext.xml");
+        }
+        return dataFilterContext;
+    }
+
+    /**
+     * 功能描述:贷后相关的service配置信息 <br>
+     * 〈功能详细描述〉
+     *
+     * @return
+     * @throws Exception
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public ClassPathXmlApplicationContext getAfterLoanContext() throws Exception {
+        if (null == afterLoanContext) {
+            afterLoanContext = new ClassPathXmlApplicationContext("afterLoanContext.xml");
+        }
+        return afterLoanContext;
+    }
+
+    /**
+     * 功能描述:贷后相关的service配置信息 <br>
+     * 〈功能详细描述〉
+     *
+     * @return
+     * @throws Exception
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public ClassPathXmlApplicationContext getCreditAdviceContext() throws Exception {
+        if (null == creditAdviceContext) {
+            creditAdviceContext = new ClassPathXmlApplicationContext("creditAdviceContext.xml");
+        }
+        return creditAdviceContext;
+    }
+
+    /**
+     * 功能描述:商品及订单信息配置service <br>
+     * 〈功能详细描述〉
+     *
+     * @return
+     * @throws Exception
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public ClassPathXmlApplicationContext getGoodsOrderContext() throws Exception {
+        if (null == goodsOrderContext) {
+            goodsOrderContext = new ClassPathXmlApplicationContext("goodsOrderContext.xml");
+        }
+        return goodsOrderContext;
+    }
+}
